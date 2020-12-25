@@ -22,11 +22,11 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ route('home') }}">
-                    Home
+                    {{ trans('label.home') }}
                 </a>
                 @auth
                     <a class="navbar-brand" href="{{ route('posts.show', Auth::user()->id) }}">
-                        My Posts
+                        {{ trans('label.my_posts') }}
                     </a>
                 @endauth
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -41,11 +41,11 @@
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">Login</a>
+                                <a class="nav-link" href="{{ route('login') }}">{{ trans('label.login') }}</a>
                             </li>
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">Register</a>
+                                    <a class="nav-link" href="{{ route('register') }}">{{ trans('label.register') }}</a>
                                 </li>
                             @endif
                         @else
@@ -55,16 +55,27 @@
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                        document.getElementById('logout-form').submit();">
-                                        Logout
-                                    </a>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST">
                                         @csrf
+                                        <button class="btn btn-light" type="submit">{{ trans('label.logout') }}</button>
                                     </form>
                                 </div>
                             </li>
                         @endguest
+                        <li class="nav-item dropdown">
+                            <div class="dropdown show">
+                                <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{ trans('label.languages') }}
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <a class="dropdown-item"
+                                        href="{{ route('change-language', ['language' => 'en']) }}">{{ trans('label.lang.en') }}</a>
+                                    <a class="dropdown-item"
+                                        href="{{ route('change-language', ['language' => 'vi']) }}">{{ trans('label.lang.vi') }}</a>
+                                </div>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </div>

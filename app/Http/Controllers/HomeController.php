@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Session;
 
 class HomeController extends Controller
 {
@@ -14,7 +15,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth')->except('index');
+        $this->middleware('auth')->except('index', 'changeLanguage');
     }
 
     /**
@@ -27,5 +28,16 @@ class HomeController extends Controller
         $users = User::withCount('posts')->get();
 
         return view('home', compact('users'));
+    }
+
+    public function changeLanguage(Request $request)
+    {
+        $lang = $request->language;
+        if ($lang != 'en' && $lang != 'vi') {
+            $lang = config('app.locale');
+        }
+        Session::put('language', $lang);
+
+        return redirect()->back();
     }
 }
