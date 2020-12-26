@@ -1,18 +1,20 @@
 @extends('layouts.app')
 @section('content')
     <h1 class="text-center">{{ trans('label.my_posts') }}</h1>
+    @if (Session::has('mess'))
+        <div class="card notification">
+            <div class="card-header">
+                <b>{{ trans('label.message') }}</b>
+            </div>
+            <div class="toast-body">
+                <span>{!! Session::get('mess') !!}</span>
+            </div>
+        </div>
+    @endif
     <div class="container">
         <a href="{{ route('posts.create') }}" type="button" class="btn btn-primary mb-2">{{ trans('label.add_post') }}</a>
         <div class="row justify-content-center">
             <div class="col-md-12">
-                @if (Session::has('mess'))
-                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                        <strong>{{ trans('label.message') }} </strong> {!! Session::get('mess') !!}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                @endif
                 <table class="table">
                     <thead>
                         <tr>
